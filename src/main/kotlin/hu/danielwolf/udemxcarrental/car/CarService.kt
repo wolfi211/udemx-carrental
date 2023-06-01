@@ -1,7 +1,9 @@
 package hu.danielwolf.udemxcarrental.car
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.server.ResponseStatusException
 
 @Service
@@ -9,8 +11,8 @@ class CarService(val repository: CarRepository) {
 
     fun getAll():List<CarEntity> = repository.findAll()
 
-    fun getById(id: Long): CarEntity = repository.findById(id).orElse(null)
-        //?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun getById(id: Long): CarEntity = repository.findByIdOrNull(id) ?:
+        throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     fun create(car: CarEntity): CarEntity = repository.save(car)
 
@@ -24,5 +26,16 @@ class CarService(val repository: CarRepository) {
             car.id = id
             repository.save(car)
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    }
+
+    fun setCarImage(id: Long, file: MultipartFile){
+        val car : CarEntity = repository.findById(id).orElseThrow()
+        car.image = file.bytes
+        repository.save(car)
+    }
+
+    fun getCarImage(id: Long): ByteArray{
+        val car: CarEntity = repository.findById(id).orElseThrow()
+        return car.image
     }
 }
