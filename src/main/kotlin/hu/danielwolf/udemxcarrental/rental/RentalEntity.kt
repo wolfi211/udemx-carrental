@@ -8,8 +8,8 @@ import java.time.LocalDate
 @Table(name = "rentals")
 data class RentalEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long,
-    var fromDate: LocalDate,
-    var toDate: LocalDate,
+    var dateStart: LocalDate,
+    var dateEnd: LocalDate,
     var userName: String,
     var userEmail: String,
     var userAddress: String,
