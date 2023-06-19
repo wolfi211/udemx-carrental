@@ -6,7 +6,7 @@ COPY . .
 
 RUN chmod 777 gradlew
 
-RUN ./gradlew
+RUN ./gradlew clean build -x test
 
 EXPOSE 8080
 

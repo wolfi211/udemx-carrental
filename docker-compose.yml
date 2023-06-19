@@ -13,14 +13,14 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DB_URL: jdbc:postgresql://db:5432/postgres
+      DB_URL: jdbc:postgresql://carrentaldb:5432/postgres
       PG_USER: postgres
       PG_PASSWORD: postgres
     depends_on:
-      - db
-  db:
-    container_name: db
-    image: postgres:12
+      - carrentaldb
+  carrentaldb:
+    container_name: carrentaldb
+    image: postgres:15
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
