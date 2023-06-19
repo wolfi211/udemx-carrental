@@ -7,17 +7,16 @@
 </head>
 <body>
     <div class="container my-4">
-        <form action="#" th:action="@{/search}" th:object="${SearchRentalForm}" method="post">
+        <form action="#" th:action="@{/search}" th:object="${search}" method="post">
             <h1 th:text="${title}"></h1>
 
             <hr>
             <div>
                 <label for="dateStart">Start</label>
-                <input id="dateStart" class="form-control" type="date" />
-            </div>
-            <div>
+                <input class="form-control" id="dateStart" th:field="*{start}" type="date"/>
+
                 <label for="dateEnd">End</label>
-                <input id="dateEnd" class="form-control" type="date" />
+                <input class="form-control" id="dateEnd" th:field="*{end}" type="date"/>
             </div>
             <button type="submit" class="btn btn-primary form-control">Search</button>
         </form>

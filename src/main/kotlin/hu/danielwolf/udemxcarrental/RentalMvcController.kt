@@ -1,6 +1,7 @@
 package hu.danielwolf.udemxcarrental
 
 import hu.danielwolf.udemxcarrental.car.CarService
+import hu.danielwolf.udemxcarrental.models.SearchModel
 import hu.danielwolf.udemxcarrental.rental.RentalService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -16,16 +17,16 @@ class RentalMvcController (val carService: CarService, val rentalService: Rental
     @GetMapping("/search")
     fun searchRentalForm(model: Model): String {
         model["title"] = "Car Rental"
+        model["search"] = SearchModel()
         return "searchrentalform"
     }
 
     @PostMapping("/search")
-    fun searchRentalResult(@ModelAttribute searchRentalForm: SearchRentalForm, model: Model): String? {
-
-        val cars = rentalService.getCarsByDate(searchRentalForm)
-        model.addAttribute("cars", cars)
+    fun searchRentalResult(@ModelAttribute search: SearchModel, model: Model): String? {
+        val cars = rentalService.getCarsByDate(search)
+        model["title"] = "Car Rental"
+        model["cars"] = cars
+        model["daterange"] = search
         return "searchrentalresult"
     }
-
-
 }
