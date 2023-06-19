@@ -7,26 +7,19 @@
 </head>
 <body>
     <div class="container my-4">
-        <form>
+        <form action="#" th:action="@{/search}" th:object="${SearchRentalForm}" method="post">
             <h1 th:text="${title}"></h1>
 
             <hr>
-
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="md-form">
-                        <input type="text" id="startingDate" class="form-control datepicker">
-                        <label for="startingDate">Dátumtól</label>
-                    </div>
-
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="md-form">
-                        <input type="text" id="endingDate" class="form-control datepicker">
-                        <label for="endingDate">Dátumig</label>
-                    </div>
-                </div>
+            <div>
+                <label for="dateStart">Start</label>
+                <input id="dateStart" class="form-control" type="date" />
             </div>
+            <div>
+                <label for="dateEnd">End</label>
+                <input id="dateEnd" class="form-control" type="date" />
+            </div>
+            <button type="submit" class="btn btn-primary form-control">Search</button>
         </form>
     </div>
 
