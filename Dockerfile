@@ -1,5 +1,13 @@
-FROM openjdk:17-jdk-alpine
+FROM amazoncorretto:17-alpine-jdk
 
-COPY build/libs/udemx-carrental-0.0.1-SNAPSHOT.jar app-1.0.0.jar
+WORKDIR /app
 
-ENTRYPOINT [ "java", "-jar", "app-1.0.0.jar" ]
+COPY . .
+
+RUN chmod 777 gradlew
+
+RUN ./gradlew
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "./build/libs/udemx-carrental-0.0.1-SNAPSHOT.jar"]
