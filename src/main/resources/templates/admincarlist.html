@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a th:href="@{/admin/cars/new}">New Car</a>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>License Plate</th>
+        <th>Image</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <td th:text="${car.id}"></td>
+        <td th:text="${car.licensePlateNumber}"></td>
+        <td th:text="${car.carModel.carBrand.name}"></td>
+        <td th:text="${car.carModel.name}"></td>
+        <td></td>
+        <td>
+            <a th:href="@{/admin/cars/{id}(id=${car.id})}" class="btn btn-primary">Edit</a>
+            <a th:href="@{/admin/cars/{id}(id=${car.id})}" class="btn btn-primary">Add Picture</a>
+            <a th:href="@{/admin/cars/{id}(id=${car.id})}" class="btn btn-primary">Deactivate</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
