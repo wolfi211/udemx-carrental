@@ -34,7 +34,7 @@ class CarService(val repository: CarRepository) {
         repository.save(car)
     }
 
-    fun getCarImage(id: Long): ByteArray{
+    fun getCarImage(id: Long): ByteArray? {
         val car: CarEntity = repository.findById(id).orElseThrow()
         return car.image
     }
