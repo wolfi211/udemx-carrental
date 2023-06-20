@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Starting Date</th>
+    <th>Ending Date</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th>Car License Plate</th>
+    <th>Car Image</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="rental : ${rentals}">
+    <td th:text="${rental.id}"></td>
+    <td th:text="${rental.dateStart}"></td>
+    <td th:text="${rental.dateEnd}"></td>
+    <td th:text="${rental.userName}"></td>
+    <td th:text="${rental.userEmail}"></td>
+    <td th:text="${rental.userAddress}"></td>
+    <td th:text="${rental.userPhone}"></td>
+    <td th:text="${rental.car.licensePlateNumber}"></td>
+    <td>
+      <img th:src="@{/api/v1/cars/{id}/image(id=${rental.car.id})}" width="150" />
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
