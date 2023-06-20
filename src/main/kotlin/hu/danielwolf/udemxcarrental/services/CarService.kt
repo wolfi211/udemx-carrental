@@ -1,5 +1,7 @@
-package hu.danielwolf.udemxcarrental.car
+package hu.danielwolf.udemxcarrental.services
 
+import hu.danielwolf.udemxcarrental.repositories.CarRepository
+import hu.danielwolf.udemxcarrental.models.CarEntity
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service

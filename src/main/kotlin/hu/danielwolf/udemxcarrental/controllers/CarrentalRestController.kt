@@ -1,5 +1,7 @@
-package hu.danielwolf.udemxcarrental.car
+package hu.danielwolf.udemxcarrental.controllers
 
+import hu.danielwolf.udemxcarrental.models.CarEntity
+import hu.danielwolf.udemxcarrental.services.CarService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -10,7 +12,7 @@ import java.net.URI
 
 @RequestMapping("api/v1/cars")
 @RestController
-class CarRestController(val carService: CarService) {
+class CarrentalRestController(val carService: CarService) {
 
     @GetMapping
     fun getAllCars() = carService.getAll()
@@ -19,10 +21,10 @@ class CarRestController(val carService: CarService) {
     fun getCar(@PathVariable id: Long) = carService.getById(id)
 
     @GetMapping("/{id}/image")
-    fun getProfilePicture(@PathVariable("id") id: Long): ResponseEntity<Any>{
+    fun getImage(@PathVariable("id") id: Long): ResponseEntity<Any>{
 
         return try {
-            val image: ByteArray = carService.getCarImage(id)
+            val image: ByteArray? = carService.getCarImage(id)
 
             ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(MediaType.IMAGE_JPEG_VALUE))

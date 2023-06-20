@@ -1,7 +1,7 @@
-package hu.danielwolf.udemxcarrental.car
+package hu.danielwolf.udemxcarrental.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import hu.danielwolf.udemxcarrental.rental.RentalEntity
+import hu.danielwolf.udemxcarrental.models.RentalEntity
 import jakarta.persistence.*
 
 @Entity

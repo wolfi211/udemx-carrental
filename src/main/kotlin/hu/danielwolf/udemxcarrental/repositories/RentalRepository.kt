@@ -1,5 +1,6 @@
-package hu.danielwolf.udemxcarrental.rental
+package hu.danielwolf.udemxcarrental.repositories
 
+import hu.danielwolf.udemxcarrental.models.RentalEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
