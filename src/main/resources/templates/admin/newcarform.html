@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="#" th:action="@{/admin/cars/new}" th:object="${car}" method="post">
+        <label for="licensePlate">License Plate</label>
+        <input class="form-control" id="licensePlate" th:field="*{licensePlateNumber}" type="text" />
+        <label for="dailyPrice">Daily Price</label>
+        <input class="form-control" id="dailyPrice" th:field="*{dailyPrice}" type="number" />
+        <input id="submit" type="submit" />
+    </form>
+</body>
+</html>

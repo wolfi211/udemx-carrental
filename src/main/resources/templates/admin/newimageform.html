@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <form action="#" enctype="multipart/form-data" method="post" th:action="@{/admin/cars/{id}/image(id=${id})}">
+        <input id="image" name="image" type="file" accept="image/*" />
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

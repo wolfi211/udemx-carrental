@@ -11,6 +11,7 @@
     <tr>
         <th>ID</th>
         <th>License Plate</th>
+        <th>Daily Price</th>
         <th>Image</th>
         <th>Action</th>
     </tr>
@@ -19,13 +20,14 @@
     <tr th:each="car : ${cars}">
         <td th:text="${car.id}"></td>
         <td th:text="${car.licensePlateNumber}"></td>
-        <td th:text="${car.carModel.carBrand.name}"></td>
-        <td th:text="${car.carModel.name}"></td>
-        <td></td>
+        <td th:text="${car.dailyPrice}"></td>
         <td>
-            <a th:href="@{/admin/cars/{id}(id=${car.id})}" class="btn btn-primary">Edit</a>
-            <a th:href="@{/admin/cars/{id}(id=${car.id})}" class="btn btn-primary">Add Picture</a>
-            <a th:href="@{/admin/cars/{id}(id=${car.id})}" class="btn btn-primary">Deactivate</a>
+            <img th:src="@{/api/v1/cars/{id}/image(id=${car.id})}" width="200" />
+        </td>
+        <td>
+            <a th:href="@{/admin/cars/{id}/edit(id=${car.id})}" class="btn btn-primary">Edit</a>
+            <a th:href="@{/admin/cars/{id}/image(id=${car.id})}" class="btn btn-primary">Add Picture</a>
+            <a th:href="@{/admin/cars/{id}/deactivate(id=${car.id})}" class="btn btn-primary">Deactivate</a>
         </td>
     </tr>
     </tbody>

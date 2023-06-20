@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="#" th:action="@{/admin/cars/{id}/edit(id=${car.id})}" th:object="${car}" method="post">
+        <label for="licenseplate">License-Plate</label>
+        <input id="licenseplate" type="text" th:value="${car.licensePlateNumber}" th:field="*{licensePlateNumber}" />
+        <label for="dailyprice">Daily Price</label>
+        <input id="dailyprice" type="text" th:value="${car.dailyPrice}" th:field="*{dailyPrice}" />
+        <input id="submit" type="submit">
+    </form>
+</body>
+</html>
