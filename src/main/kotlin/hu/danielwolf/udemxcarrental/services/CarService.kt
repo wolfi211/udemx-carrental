@@ -13,6 +13,8 @@ class CarService(val repository: CarRepository) {
 
     fun getAll():List<CarEntity> = repository.findAll()
 
+    fun getAllActive():List<CarEntity> = repository.findByActiveEquals(true)
+
     fun getById(id: Long): CarEntity = repository.findByIdOrNull(id) ?:
         throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
@@ -39,5 +41,13 @@ class CarService(val repository: CarRepository) {
     fun getCarImage(id: Long): ByteArray? {
         val car: CarEntity = repository.findById(id).orElseThrow()
         return car.image
+    }
+
+    fun setActive(id: Long, active: Boolean): CarEntity {
+        return if (repository.existsById(id)) {
+            var car = getById(id)
+            car.active = active
+            repository.save(car)
+        } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
 }
