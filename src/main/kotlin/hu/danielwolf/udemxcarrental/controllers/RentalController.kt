@@ -12,20 +12,21 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDate
 
 
 @Controller
 class RentalController (val carService: CarService, val rentalService: RentalService) {
 
-    @GetMapping("/search")
+    @GetMapping("/")
     fun searchRentalForm(model: Model): String {
         model["title"] = "Car Rental"
         model["search"] = DateRangeModel()
         return "searchrentalform"
     }
 
-    @PostMapping("/search")
+    @PostMapping("/")
     fun searchRentalResult(@ModelAttribute search: DateRangeModel, model: Model): String? {
         val cars = rentalService.getCarsByDate(search)
         model["title"] = "Car Rental"
@@ -50,19 +51,25 @@ class RentalController (val carService: CarService, val rentalService: RentalSer
 
     @PostMapping("/rentals")
     fun newRental(
-        model: Model,
+        model: RedirectAttributes,
         @ModelAttribute rental: RentalModel
     ): String {
-        val newRental = RentalEntity(
-            dateStart = rental.dateStart!!,
-            dateEnd = rental.dateEnd!!,
-            userName = rental.userName!!,
-            userEmail = rental.userEmail!!,
-            userAddress = rental.userAddress!!,
-            userPhone = rental.userPhone!!,
-            car = carService.getById(rental.carId!!)
-        )
-        rentalService.create(newRental)
-        return "success"
+        try {
+            val newRental = RentalEntity(
+                dateStart = rental.dateStart!!,
+                dateEnd = rental.dateEnd!!,
+                userName = rental.userName!!,
+                userEmail = rental.userEmail!!,
+                userAddress = rental.userAddress!!,
+                userPhone = rental.userPhone!!,
+                car = carService.getById(rental.carId!!)
+            )
+            rentalService.create(newRental)
+            model.addFlashAttribute("success", "You have rented the chosen car!")
+            return "redirect:/"
+        } catch (e: Exception) {
+            model.addFlashAttribute("error", "You could not rent the car for some reason!")
+            return "redirect:/"
+        }
     }
 }
