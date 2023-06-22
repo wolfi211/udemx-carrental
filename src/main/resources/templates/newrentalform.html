@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <div th:replace="fragments/general :: head"></div>
 </head>
 <body>
-<div class="container my-4">
-<form action="#" th:action="@{/rentals}" th:object="${rental}" method="post">
-    <label th:for="*{dateStart}">Starting Date</label>
-    <input class="form-control mb-2" th:id="dateStart" th:name="dateStart" th:value="${daterange.start}" type="date" disabled/>
-    <label th:for="*{dateEnd}">Ending Date</label>
-    <input class="form-control mb-2" th:id="dateEnd" th:name="dateEnd" th:value="${daterange.end}" type="date" disabled/>
-    <label th:for="*{userName}">Name</label>
-    <input class="form-control mb-2" th:field="*{userName}" type="text" />
-    <label th:for="*{userEmail}">E-Mail</label>
-    <input class="form-control mb-2" th:field="*{userEmail}" type="text" />
-    <label th:for="*{userAddress}">Address</label>
-    <input class="form-control mb-2" th:field="*{userAddress}" type="text" />
-    <label th:for="*{userPhone}">Phone</label>
-    <input class="form-control mb-2" th:field="*{userPhone}" type="text" />
-    <input class="form-control" th:id="carId" th:name="carId" th:value="${car.id}" type="hidden"/>
-    <label></label>
-    <input class="form-control btn btn-primary" id="submit" type="submit" />
-</form>
-</div>
+<header th:insert="fragments/general :: navbar"></header>
+<div th:replace="fragments/general :: message"></div>
+<main class="container my-4">
+    <h1 th:text="'Make a new Rental'" class="text-center my-3"></h1>
+    <hr/>
+    <form action="#" th:action="@{/rentals}" th:object="${rental}" method="post">
+        <label th:for="*{userName}">Name:</label>
+        <input class="form-control mb-2" th:field="*{userName}" type="text"/>
+        <label th:for="*{userEmail}">E-Mail:</label>
+        <input class="form-control mb-2" th:field="*{userEmail}" type="text"/>
+        <label th:for="*{userAddress}">Address:</label>
+        <input class="form-control mb-2" th:field="*{userAddress}" type="text"/>
+        <label th:for="*{userPhone}">Phone:</label>
+        <input class="form-control mb-2" th:field="*{userPhone}" type="text"/>
+        <input class="form-control" th:id="carId" th:name="carId" th:value="${car.id}" type="hidden"/>
+        <input class="form-control mb-2" th:id="dateStart" th:name="dateStart" th:value="${daterange.start}"
+               type="hidden"/>
+        <input class="form-control mb-2" th:id="dateEnd" th:name="dateEnd" th:value="${daterange.end}" type="hidden"/>
+
+        <label th:for="dateStartText">Starting Date:</label>
+        <p class="form-control mb-2" id="dateStartText" name="dateStartText" th:text="${daterange.start}"></p>
+        <label th:for="dateEndText">Ending Date:</label>
+        <p class="form-control mb-2" id="dateEndText" name="dateEndText" th:text="${daterange.end}"></p>
+        <label th:for="days">Days:</label>
+        <p class="form-control mb-2" id="days" name="days" th:text="${daterange.getDays()}"></p>
+        <label th:for="totalPrice">Total Price:</label>
+        <p class="form-control mb-2" id="totalPrice" name="totalPrice"
+           th:text="${car.getPriceForDays(daterange.getDays())}"></p>
+        <input class="form-control btn btn-primary" id="submit" type="submit"/>
+    </form>
+</main>
 </body>
 </html>
