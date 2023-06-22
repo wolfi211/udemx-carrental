@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="fragments/general :: head"></div>
 </head>
 <body>
-    <form action="#" th:action="@{/admin/cars/new}" th:object="${car}" method="post">
+<header th:insert="fragments/adminnavbar :: navbar"></header>
+<div th:replace="fragments/general :: message"></div>
+<main class="container my-4">
+    <h1 th:text="'New Car'" class="text-center my-3"></h1>
+    <hr/>
+    <form th:action="@{/admin/cars/new}" th:object="${car}" method="post">
         <label for="licensePlate">License Plate</label>
-        <input class="form-control" id="licensePlate" th:field="*{licensePlateNumber}" type="text" />
+        <input id="licensePlate" th:field="*{licensePlateNumber}" type="text" class="form-control my-2"/>
         <label for="dailyPrice">Daily Price</label>
-        <input class="form-control" id="dailyPrice" th:field="*{dailyPrice}" type="number" />
-        <input id="submit" type="submit" />
+        <input id="dailyPrice" th:field="*{dailyPrice}" type="number" class="form-control my-2"/>
+        <input id="submit" type="submit" class="form-control my-2 btn btn-primary"/>
     </form>
+</main>
 </body>
 </html>

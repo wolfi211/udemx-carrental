@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="fragments/general :: head"></div>
 </head>
 <body>
-<a th:href="@{/admin/cars/new}">New Car</a>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>License Plate</th>
-        <th>Daily Price</th>
-        <th>Image</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="car : ${cars}">
-        <td th:text="${car.id}"></td>
-        <td th:text="${car.licensePlateNumber}"></td>
-        <td th:text="${car.dailyPrice}"></td>
-        <td>
-            <img th:src="@{/api/v1/cars/{id}/image(id=${car.id})}" width="200" />
-        </td>
-        <td>
-            <a th:href="@{/admin/cars/{id}/edit(id=${car.id})}" class="btn btn-primary">Edit</a>
-            <a th:href="@{/admin/cars/{id}/image(id=${car.id})}" class="btn btn-primary">Add Picture</a>
-            <a th:href="@{/admin/cars/{id}/deactivate(id=${car.id})}" class="btn btn-primary">Deactivate</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<header th:insert="fragments/adminnavbar :: navbar"></header>
+<div th:replace="fragments/general :: message"></div>
+<main class="container my-4">
+    <h1 th:text="'All Cars'" class="text-center my-3"></h1>
+    <hr/>
+    <a th:href="@{/admin/cars/new}" class="btn btn-primary form-control my-3">New Car</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">License Plate</th>
+            <th class="text-center">Daily Price</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Image</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car : ${cars}">
+            <td th:text="${car.id}" class="text-center align-middle"></td>
+            <td th:text="${car.licensePlateNumber}" class="text-center align-middle"></td>
+            <td th:text="${car.dailyPrice}" class="text-center align-middle"></td>
+            <td th:text="${car.active}? 'Active' : 'Inactive'" class="text-center align-middle"></td>
+            <td class="d-flex justify-content-center">
+                <img th:src="@{/api/v1/cars/{id}/image(id=${car.id})}" width="200"/>
+            </td>
+            <td>
+                <a th:href="@{/admin/cars/{id}/edit(id=${car.id})}" class="btn btn-primary form-control my-1">Edit</a>
+                <a th:href="@{/admin/cars/{id}/image(id=${car.id})}" class="btn btn-primary form-control my-1">Add
+                    Picture</a>
+                <a th:href="@{/admin/cars/{id}/deactivate(id=${car.id})}" th:if="${car.active}"
+                   class="btn btn-primary form-control my-1">Deactivate</a>
+                <a th:href="@{/admin/cars/{id}/activate(id=${car.id})}" th:unless="${car.active}"
+                   class="btn btn-primary form-control my-1">Activate</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
 </body>
 </html>

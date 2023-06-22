@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${title}"></title>
+    <div th:replace="fragments/general :: head"></div>
 </head>
 <body>
-    <form action="#" enctype="multipart/form-data" method="post" th:action="@{/admin/cars/{id}/image(id=${id})}">
-        <input id="image" name="image" type="file" accept="image/*" />
-        <button type="submit">Upload</button>
+<header th:insert="fragments/adminnavbar :: navbar"></header>
+<div th:replace="fragments/general :: message"></div>
+<main class="container my-4">
+    <h1 th:text="'New Image for Car'" class="text-center my-3"></h1>
+    <hr/>
+    <form enctype="multipart/form-data" method="post" th:action="@{/admin/cars/{id}/image(id=${id})}">
+        <input id="image" name="image" type="file" accept="image/*" class="form-control my-2"/>
+        <button type="submit" class="form-control my-2 btn btn-primary">Upload</button>
     </form>
+</main>
 </body>
 </html>

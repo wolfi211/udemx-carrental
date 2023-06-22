@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="fragments/general :: head"></div>
 </head>
 <body>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Starting Date</th>
-    <th>Ending Date</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Address</th>
-    <th>Phone</th>
-    <th>Car License Plate</th>
-    <th>Car Image</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="rental : ${rentals}">
-    <td th:text="${rental.id}"></td>
-    <td th:text="${rental.dateStart}"></td>
-    <td th:text="${rental.dateEnd}"></td>
-    <td th:text="${rental.userName}"></td>
-    <td th:text="${rental.userEmail}"></td>
-    <td th:text="${rental.userAddress}"></td>
-    <td th:text="${rental.userPhone}"></td>
-    <td th:text="${rental.car.licensePlateNumber}"></td>
-    <td>
-      <img th:src="@{/api/v1/cars/{id}/image(id=${rental.car.id})}" width="150" />
-    </td>
-  </tr>
-  </tbody>
-</table>
+<header th:insert="fragments/adminnavbar :: navbar"></header>
+<div th:replace="fragments/general :: message"></div>
+<main class="container my-4">
+    <h1 th:text="'All Rentals'" class="text-center my-3"></h1>
+    <hr/>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Starting Date</th>
+            <th class="text-center">Ending Date</th>
+            <th class="text-center">Days</th>
+            <th class="text-center">Full Price</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Address</th>
+            <th class="text-center">Phone</th>
+            <th class="text-center">Car License Plate</th>
+            <th class="text-center">Car Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rental : ${rentals}">
+            <td th:text="${rental.id}" class="text-center align-middle"></td>
+            <td th:text="${rental.dateStart}" class="text-center align-middle"></td>
+            <td th:text="${rental.dateEnd}" class="text-center align-middle"></td>
+            <td th:text="${rental.getDays()}" class="text-center align-middle"></td>
+            <td th:text="${rental.getFullPrice()}" class="text-center align-middle"></td>
+            <td th:text="${rental.userName}" class="text-center align-middle"></td>
+            <td th:text="${rental.userEmail}" class="text-center align-middle"></td>
+            <td th:text="${rental.userAddress}" class="text-center align-middle"></td>
+            <td th:text="${rental.userPhone}" class="text-center align-middle"></td>
+            <td th:text="${rental.car.licensePlateNumber}" class="text-center align-middle"></td>
+            <td>
+                <img th:src="@{/api/v1/cars/{id}/image(id=${rental.car.id})}" width="150"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
 </body>
 </html>

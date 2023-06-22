@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:replace="fragments/general :: head"></div>
 </head>
 <body>
-    <form action="#" th:action="@{/admin/cars/{id}/edit(id=${car.id})}" th:object="${car}" method="post">
-        <label for="licenseplate">License-Plate</label>
-        <input id="licenseplate" type="text" th:value="${car.licensePlateNumber}" th:field="*{licensePlateNumber}" />
-        <label for="dailyprice">Daily Price</label>
-        <input id="dailyprice" type="text" th:value="${car.dailyPrice}" th:field="*{dailyPrice}" />
-        <input id="submit" type="submit">
+<header th:insert="fragments/adminnavbar :: navbar"></header>
+<div th:replace="fragments/general :: message"></div>
+<main class="container my-4">
+    <h1 th:text="'Edit Car'" class="text-center my-3"></h1>
+    <hr/>
+    <form th:action="@{/admin/cars/{id}/edit(id=${car.id})}" th:object="${car}" method="post">
+        <label for="licenseplate">License-Plate:</label>
+        <input id="licenseplate" type="text" th:value="${car.licensePlateNumber}" th:field="*{licensePlateNumber}"
+               class="form-control my-2"/>
+        <label for="dailyprice">Daily Price:</label>
+        <input id="dailyprice" type="text" th:value="${car.dailyPrice}" th:field="*{dailyPrice}"
+               class="form-control my-2"/>
+        <input id="submit" type="submit" value="Submit" class="form-control btn btn-primary my-2">
     </form>
+</main>
 </body>
 </html>
