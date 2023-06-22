@@ -1,7 +1,10 @@
 package hu.danielwolf.udemxcarrental.controllers
 
 import hu.danielwolf.udemxcarrental.models.CarEntity
+import hu.danielwolf.udemxcarrental.models.DateRangeModel
+import hu.danielwolf.udemxcarrental.models.RentalEntity
 import hu.danielwolf.udemxcarrental.services.CarService
+import hu.danielwolf.udemxcarrental.services.RentalService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -9,18 +12,22 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.net.URI
+import java.time.LocalDate
 
-@RequestMapping("api/v1/cars")
+@RequestMapping("api/v1")
 @RestController
-class CarrentalRestController(val carService: CarService) {
+class CarrentalRestController(val carService: CarService, val rentalService: RentalService) {
 
-    @GetMapping
-    fun getAllCars() = carService.getAll()
+    @GetMapping("/cars")
+    fun getAllCars() = carService.getAllActive()
 
-    @GetMapping("/{id}")
+    @GetMapping("/cars/{start}/{end}")
+    fun getAvailableCars(@PathVariable start: LocalDate, @PathVariable end: LocalDate) = rentalService.getCarsByDate(DateRangeModel(start = start, end = end))
+
+    @GetMapping("/cars/{id}")
     fun getCar(@PathVariable id: Long) = carService.getById(id)
 
-    @GetMapping("/{id}/image")
+    @GetMapping("/cars/{id}/image")
     fun getImage(@PathVariable("id") id: Long): ResponseEntity<Any>{
 
         return try {
@@ -38,11 +45,11 @@ class CarrentalRestController(val carService: CarService) {
         }
     }
 
-    @PostMapping
+    @PostMapping("/cars")
     @ResponseStatus(HttpStatus.CREATED)
     fun saveCar(@RequestBody car: CarEntity): CarEntity = carService.create(car)
 
-    @PostMapping(value= ["/{id}/image"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    @PostMapping(value= ["/cars/{id}/image"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun setCarImage(@PathVariable("id") id: Long, @RequestParam file: MultipartFile): ResponseEntity<Void>{
         return try {
             carService.setCarImage(id, file)
@@ -56,11 +63,15 @@ class CarrentalRestController(val carService: CarService) {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/rentals")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun saveRental(@RequestBody rental: RentalEntity): RentalEntity = rentalService.create(rental)
+
+    @DeleteMapping("/cars/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteCar(@PathVariable id: Long) = carService.delete(id)
 
-    @PutMapping("/{id}")
+    @PutMapping("/cars/{id}")
     fun updateCar(
         @PathVariable id: Long, @RequestBody car: CarEntity
     ) = carService.update(id, car)
