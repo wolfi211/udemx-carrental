@@ -1,7 +1,6 @@
 package hu.danielwolf.udemxcarrental.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import hu.danielwolf.udemxcarrental.models.RentalEntity
 import jakarta.persistence.*
 
 @Entity

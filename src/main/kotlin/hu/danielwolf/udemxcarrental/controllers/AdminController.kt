@@ -43,14 +43,14 @@ class AdminController(val carService: CarService, val rentalService: RentalServi
 
     @PostMapping("/cars/new")
     fun newCar(model:RedirectAttributes, @ModelAttribute car: CarModel): String {
-        try {
-            var newCar = CarEntity(dailyPrice = car.dailyPrice, licensePlateNumber = car.licensePlateNumber.toString())
+        return try {
+            val newCar = CarEntity(dailyPrice = car.dailyPrice, licensePlateNumber = car.licensePlateNumber.toString())
             carService.create(newCar)
             model.addFlashAttribute("success","Car successfully added!")
-            return "redirect:/admin/cars"
+            "redirect:/admin/cars"
         } catch (e: Exception) {
             model.addFlashAttribute("error", "Could not create a new car!")
-            return "redirect:/admin/cars/new"
+            "redirect:/admin/cars/new"
         }
     }
 
@@ -63,16 +63,16 @@ class AdminController(val carService: CarService, val rentalService: RentalServi
 
     @PostMapping("/cars/{id}/edit")
     fun editCar(model: RedirectAttributes, @PathVariable id: Long, @ModelAttribute carModel: CarModel): String {
-        try {
-            var car = carService.getById(id)
+        return try {
+            val car = carService.getById(id)
             car.licensePlateNumber = carModel.licensePlateNumber.toString()
             car.dailyPrice = carModel.dailyPrice
             carService.update(id, car)
             model.addFlashAttribute("success", "Saved edited car!")
-            return "redirect:/admin/cars"
+            "redirect:/admin/cars"
         } catch (e: Exception) {
             model.addFlashAttribute("error", "Could not edit car!")
-            return "redirect:/admin/cars"
+            "redirect:/admin/cars"
         }
     }
 
@@ -85,37 +85,37 @@ class AdminController(val carService: CarService, val rentalService: RentalServi
 
     @PostMapping("/cars/{id}/image")
     fun editCarImage(model: RedirectAttributes, @PathVariable id: Long, @RequestParam("image") image: MultipartFile): String {
-        try {
+        return try {
             carService.setCarImage(id, image)
             model.addFlashAttribute("success", "Saved image!")
-            return "redirect:admin/carlist"
+            "redirect:admin/carlist"
         } catch(e: Exception) {
             model.addFlashAttribute("error","Could not save image!")
-            return "redirect:admin/carlist"
+            "redirect:admin/carlist"
         }
     }
 
     @GetMapping("/cars/{id}/deactivate")
     fun deactivateCar(model: RedirectAttributes, @PathVariable id: Long): String {
-        try {
+        return try {
             rentalService.setCarActive(id, false)
             model.addFlashAttribute("success", "Car deactivated!")
-            return "redirect:/admin/cars"
+            "redirect:/admin/cars"
         } catch(e: Exception) {
             model.addFlashAttribute("error", "Could not deactivate car!")
-            return "redirect:/admin/cars"
+            "redirect:/admin/cars"
         }
     }
 
     @GetMapping("/cars/{id}/activate")
     fun activateCar(model: RedirectAttributes, @PathVariable id: Long): String {
-        try {
+        return try {
             rentalService.setCarActive(id, true)
             model.addFlashAttribute("success", "Car activated!")
-            return "redirect:/admin/cars"
+            "redirect:/admin/cars"
         } catch(e: Exception) {
             model.addFlashAttribute("error", "Could not activate car!")
-            return "redirect:/admin/cars"
+            "redirect:/admin/cars"
         }
     }
 }

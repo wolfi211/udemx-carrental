@@ -8,5 +8,5 @@ data class DateRangeModel (
     var start: LocalDate? = null,
     var end: LocalDate? = null
 ) {
-    fun getDays(): Long? = start?.until(end, ChronoUnit.DAYS)!! + 1
+    fun getDays(): Long = start?.until(end, ChronoUnit.DAYS)!! + 1
 }

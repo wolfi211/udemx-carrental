@@ -12,7 +12,7 @@
     <hr/>
     <div class="d-flex flex-wrap justify-content-center">
         <div class="card m-1" style="width: 18rem;" th:each="car : ${cars}">
-            <img th:src="@{/api/v1/cars/{id}/image(id=${car.id})}" class="card-img-top" alt="...">
+            <img th:src="@{/api/v1/cars/{id}/image(id=${car.id})}" class="card-img-top" alt="car image">
             <div class="card-body">
                 <h5 class="card-title" th:text="${car.licensePlateNumber}"></h5>
                 <p class="card-text" th:text="'Daily Price: ' + ${car.dailyPrice} + ' Ft'"></p>

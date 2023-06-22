@@ -28,7 +28,7 @@
             <td th:text="${car.dailyPrice}" class="text-center align-middle"></td>
             <td th:text="${car.active}? 'Active' : 'Inactive'" class="text-center align-middle"></td>
             <td class="d-flex justify-content-center">
-                <img th:src="@{/api/v1/cars/{id}/image(id=${car.id})}" width="200"/>
+                <img th:src="@{/api/v1/cars/{id}/image(id=${car.id})}" width="200" alt="car image" />
             </td>
             <td>
                 <a th:href="@{/admin/cars/{id}/edit(id=${car.id})}" class="btn btn-primary form-control my-1">Edit</a>

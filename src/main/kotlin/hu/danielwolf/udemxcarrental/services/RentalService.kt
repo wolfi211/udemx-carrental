@@ -44,8 +44,8 @@ class RentalService(val repository: RentalRepository, val carService: CarService
     }
 
     fun setCarActive(id: Long, active: Boolean): CarEntity {
-        var car = carService.getById(id)
-        var rentals = repository.findByCar(car)
+        val car = carService.getById(id)
+        val rentals = repository.findByCar(car)
         val currentDate = LocalDate.now()
         for(rental : RentalEntity in rentals) {
             if(currentDate <= rental.dateEnd) {

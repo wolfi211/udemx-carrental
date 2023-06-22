@@ -24,13 +24,13 @@
         <input class="form-control mb-2" th:id="dateEnd" th:name="dateEnd" th:value="${daterange.end}" type="hidden"/>
 
         <label th:for="dateStartText">Starting Date:</label>
-        <p class="form-control mb-2" id="dateStartText" name="dateStartText" th:text="${daterange.start}"></p>
+        <p class="form-control mb-2" id="dateStartText" th:text="${daterange.start}"></p>
         <label th:for="dateEndText">Ending Date:</label>
-        <p class="form-control mb-2" id="dateEndText" name="dateEndText" th:text="${daterange.end}"></p>
+        <p class="form-control mb-2" id="dateEndText" th:text="${daterange.end}"></p>
         <label th:for="days">Days:</label>
-        <p class="form-control mb-2" id="days" name="days" th:text="${daterange.getDays()}"></p>
+        <p class="form-control mb-2" id="days" th:text="${daterange.getDays()}"></p>
         <label th:for="totalPrice">Total Price:</label>
-        <p class="form-control mb-2" id="totalPrice" name="totalPrice"
+        <p class="form-control mb-2" id="totalPrice"
            th:text="${car.getPriceForDays(daterange.getDays())}"></p>
         <input class="form-control btn btn-primary" id="submit" type="submit"/>
     </form>

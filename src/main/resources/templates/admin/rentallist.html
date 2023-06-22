@@ -38,7 +38,7 @@
             <td th:text="${rental.userPhone}" class="text-center align-middle"></td>
             <td th:text="${rental.car.licensePlateNumber}" class="text-center align-middle"></td>
             <td>
-                <img th:src="@{/api/v1/cars/{id}/image(id=${rental.car.id})}" width="150"/>
+                <img th:src="@{/api/v1/cars/{id}/image(id=${rental.car.id})}" width="150" alt="car image" />
             </td>
         </tr>
         </tbody>

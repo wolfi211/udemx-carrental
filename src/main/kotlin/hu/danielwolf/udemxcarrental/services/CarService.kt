@@ -45,7 +45,7 @@ class CarService(val repository: CarRepository) {
 
     fun setActive(id: Long, active: Boolean): CarEntity {
         return if (repository.existsById(id)) {
-            var car = getById(id)
+            val car = getById(id)
             car.active = active
             repository.save(car)
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
