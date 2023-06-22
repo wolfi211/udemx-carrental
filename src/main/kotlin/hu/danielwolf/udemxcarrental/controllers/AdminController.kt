@@ -14,18 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @RequestMapping("admin")
 @Controller
 class AdminController(val carService: CarService, val rentalService: RentalService){
 
-    @GetMapping("/")
-    fun adminLandingPage(model: Model): String {
-        model["title"] = "Car Rental - Admin"
-        return "adminlandingpage"
-    }
-
-    @GetMapping("/rentals")
+    @RequestMapping(value = ["", "/"])
     fun rentalList(model: Model): String {
         model["title"] = "Car Rental - Admin"
         model["rentals"] = rentalService.getAll()
@@ -47,10 +42,16 @@ class AdminController(val carService: CarService, val rentalService: RentalServi
     }
 
     @PostMapping("/cars/new")
-    fun newCar(model:Model, @ModelAttribute car: CarModel): String {
-        var newCar = CarEntity(dailyPrice = car.dailyPrice, licensePlateNumber = car.licensePlateNumber.toString())
-        carService.create(newCar)
-        return "success"
+    fun newCar(model:RedirectAttributes, @ModelAttribute car: CarModel): String {
+        try {
+            var newCar = CarEntity(dailyPrice = car.dailyPrice, licensePlateNumber = car.licensePlateNumber.toString())
+            carService.create(newCar)
+            model.addFlashAttribute("success","Car successfully added!")
+            return "redirect:/admin/cars"
+        } catch (e: Exception) {
+            model.addFlashAttribute("error", "Could not create a new car!")
+            return "redirect:/admin/cars/new"
+        }
     }
 
     @GetMapping("/cars/{id}/edit")
@@ -61,12 +62,18 @@ class AdminController(val carService: CarService, val rentalService: RentalServi
     }
 
     @PostMapping("/cars/{id}/edit")
-    fun editCar(model: Model, @PathVariable id: Long, @ModelAttribute carModel: CarModel): String {
-        var car = carService.getById(id)
-        car.licensePlateNumber = carModel.licensePlateNumber.toString()
-        car.dailyPrice = carModel.dailyPrice
-        carService.update(id, car)
-        return "success"
+    fun editCar(model: RedirectAttributes, @PathVariable id: Long, @ModelAttribute carModel: CarModel): String {
+        try {
+            var car = carService.getById(id)
+            car.licensePlateNumber = carModel.licensePlateNumber.toString()
+            car.dailyPrice = carModel.dailyPrice
+            carService.update(id, car)
+            model.addFlashAttribute("success", "Saved edited car!")
+            return "redirect:/admin/cars"
+        } catch (e: Exception) {
+            model.addFlashAttribute("error", "Could not edit car!")
+            return "redirect:/admin/cars"
+        }
     }
 
     @GetMapping("/cars/{id}/image")
@@ -77,8 +84,38 @@ class AdminController(val carService: CarService, val rentalService: RentalServi
     }
 
     @PostMapping("/cars/{id}/image")
-    fun editCarImage(model: Model, @PathVariable id: Long, @RequestParam("image") image: MultipartFile): String {
-        carService.setCarImage(id, image)
-        return "admin/carlist"
+    fun editCarImage(model: RedirectAttributes, @PathVariable id: Long, @RequestParam("image") image: MultipartFile): String {
+        try {
+            carService.setCarImage(id, image)
+            model.addFlashAttribute("success", "Saved image!")
+            return "redirect:admin/carlist"
+        } catch(e: Exception) {
+            model.addFlashAttribute("error","Could not save image!")
+            return "redirect:admin/carlist"
+        }
+    }
+
+    @GetMapping("/cars/{id}/deactivate")
+    fun deactivateCar(model: RedirectAttributes, @PathVariable id: Long): String {
+        try {
+            rentalService.setCarActive(id, false)
+            model.addFlashAttribute("success", "Car deactivated!")
+            return "redirect:/admin/cars"
+        } catch(e: Exception) {
+            model.addFlashAttribute("error", "Could not deactivate car!")
+            return "redirect:/admin/cars"
+        }
+    }
+
+    @GetMapping("/cars/{id}/activate")
+    fun activateCar(model: RedirectAttributes, @PathVariable id: Long): String {
+        try {
+            rentalService.setCarActive(id, true)
+            model.addFlashAttribute("success", "Car activated!")
+            return "redirect:/admin/cars"
+        } catch(e: Exception) {
+            model.addFlashAttribute("error", "Could not activate car!")
+            return "redirect:/admin/cars"
+        }
     }
 }
